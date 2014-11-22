@@ -16,8 +16,13 @@ public:
 	UInt numRectangles;
 	HaarRectangle* rectangles;
 
-	HaarArea(double threshold, double valueIfBigger, double valueIfSmaller, HaarRectangle rectangle1, HaarRectangle rectangle2);
-	HaarArea(double threshold, double valueIfBigger, double valueIfSmaller, HaarRectangle rectangle1, HaarRectangle rectangle2, HaarRectangle rectangle3);
+	HaarArea()
+	{
+
+	}
+
+	HaarArea(double threshold, double valueIfSmaller, double valueIfBigger, HaarRectangle rectangle1, HaarRectangle rectangle2);
+	HaarArea(double threshold, double valueIfSmaller, double valueIfBigger, HaarRectangle rectangle1, HaarRectangle rectangle2, HaarRectangle rectangle3);
 	~HaarArea();
 
 	void setScaleAndWeight(double scale, double weight);

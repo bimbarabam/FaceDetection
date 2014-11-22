@@ -14,7 +14,7 @@ private:
 
 public:
 
-	IntegralImage(UInt width, UInt height, UInt *picture);
+	IntegralImage(UInt width, UInt height, unsigned char *picture);
 	~IntegralImage();
 
 	UInt width;

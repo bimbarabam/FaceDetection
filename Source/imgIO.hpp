@@ -6,6 +6,7 @@
 
 #include "opencv/cv.h"
 #include "opencv/highgui.h""
+#include "TypeDef.h"
 
 class ImgIO
 {
@@ -25,6 +26,15 @@ public:
 	void ReadFromStream( unsigned char* &img );
 	void WriteToStream ( unsigned char* &img );
 
+	UInt getSizeX()
+	{
+		return m_sizeX;
+	}
+
+	UInt getSizeY()
+	{
+		return m_sizeY;
+	}
 
 private:
 
@@ -40,4 +50,5 @@ private:
 	int m_sizeY;
 
 };
+
 #endif

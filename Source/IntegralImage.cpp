@@ -1,13 +1,14 @@
 #include "IntegralImage.h"
 
 
-IntegralImage::IntegralImage(UInt width, UInt height, UInt *picture) :
+IntegralImage::IntegralImage(UInt width, UInt height, unsigned char *picture) :
 width(width),
 height(height),
 stride(width)
 {
 	this->values = new UInt[width*height];
 	this->values2 = new UInt[width*height];
+	calcFromPicture(picture);
 }
 
 IntegralImage::~IntegralImage()
@@ -18,7 +19,7 @@ IntegralImage::~IntegralImage()
 
 void IntegralImage::calcFromPicture(unsigned char* picture)
 {
-	unsigned char src = picture;
+	unsigned char* src = picture;
 
 	values[0] = picture[0];
 	values2[0] = picture[0] * picture[0];

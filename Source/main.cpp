@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <stdio.h>
-
+#include "HaarAlgorithm.h"
+#include "IntegralImage.h"
 #include "imgIO.hpp"
 
 int main( )
@@ -17,6 +18,10 @@ int main( )
 	imgIO.ReadImgColor ( pathIn, imgColor  );
 	
 	imgIO.ColorToGray( imgColor, imgGrey );
+
+	IntegralImage image(imgIO.getSizeX(), imgIO.getSizeY(), imgGrey);
+	//HaarAlgorithm alg();
+	
 	
 	imgIO.WriteImgColor( pathOutColor, imgColor );
 	imgIO.WriteImgGrey ( pathOutGrey , imgGrey  );

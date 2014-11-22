@@ -12,8 +12,8 @@ public:
 		width(width),
 		height(height),
 		weight(weight),
-		sizeScale(1f),
-		weightScale(1f)
+		sizeScale(1.0f),
+		weightScale(1.0f)
 	{
 
 	}
@@ -23,9 +23,9 @@ public:
 		left(0),
 		width(0),
 		height(0),
-		weight(0f),
+		weight(0.0f),
 		sizeScale(1.0f),
-		weightScale(1f)
+		weightScale(1.0f)
 	{
 
 	}
@@ -53,7 +53,10 @@ public:
 		weightScale = rhs.weightScale;
 		return *this;
 	}
-	~HaarRectangle();
+	~HaarRectangle()
+	{
+
+	}
 
 	UInt top, left, width, height, bottom, right;
 
@@ -69,23 +72,23 @@ public:
 	}
 	UInt scaledX()
 	{
-		return this->left * sizeScale;
+		return (UInt)(this->left * sizeScale);
 	}
 	UInt scaledY()
 	{
-		return this->top * sizeScale;
+		return (UInt)(this->top * sizeScale);
 	}
 	UInt scaledWidth()
 	{
-		return this->width * sizeScale;
+		return (UInt)(this->width * sizeScale);
 	}
 	UInt scaledHeight()
 	{
-		return this->height * sizeScale;
+		return (UInt)(this->height * sizeScale);
 	}
 	UInt scaledArea()
 	{
-		return scaledWidth() * scaledHeight();
+		return (UInt)(scaledWidth() * scaledHeight());
 	}
 	float scaledWeight()
 	{
