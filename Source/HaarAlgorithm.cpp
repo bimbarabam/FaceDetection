@@ -9,14 +9,11 @@ void HaarAlgorithm::generateFaceStages()
 	stages = new Stage[STAGES_COUNT];
 	
 	stages[0].threshold = 0.822689414024353;
-	HaarRectangle r1(3, 7, 14, 4, -1), r2(3, 9, 14, 2, 2);
-	HaarRectangle r3(1, 2, 18, 4, -1), r4(7, 2, 6, 4, 3);
-	HaarRectangle r5(1, 7, 15, 9, -1), r6(1, 10, 15, 3, 3);
 	stages[0].haarAreas = new HaarArea*[3];
 	stages[0].numAreas = 3;
-	stages[0].haarAreas[0] = new HaarArea(0.004014195874333382, 0.0337941907346249, 0.8378106951713562, r1, r2);
-	stages[0].haarAreas[1] = new HaarArea(0.0151513395830989, 0.1514132022857666, 0.7488812208175659, r3, r4);
-	stages[0].haarAreas[2] = new HaarArea(0.004210993181914091, 0.0900492817163467, 0.6374819874763489, r5, r6);
+	stages[0].haarAreas[0] = new HaarArea(0.004014195874333382, 0.0337941907346249, 0.8378106951713562, HaarRectangle(3, 7, 14, 4, -1), HaarRectangle(3, 9, 14, 2, 2));
+	stages[0].haarAreas[1] = new HaarArea(0.0151513395830989, 0.1514132022857666, 0.7488812208175659, HaarRectangle(1, 2, 18, 4, -1), HaarRectangle(7, 2, 6, 4, 3));
+	stages[0].haarAreas[2] = new HaarArea(0.004210993181914091, 0.0900492817163467, 0.6374819874763489, HaarRectangle(1, 7, 15, 9, -1), HaarRectangle(1, 10, 15, 3, 3));
 }
 
 std::vector<HaarRectangle> HaarAlgorithm::execute(IntegralImage* image)
@@ -63,10 +60,6 @@ std::vector<HaarRectangle> HaarAlgorithm::execute(IntegralImage* image)
 				if (searchWindow(image, window, invArea))
 				{
 					result.push_back(window);
-				}
-				else
-				{
-					y = y;
 				}
 			}
 		}
