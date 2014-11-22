@@ -6,16 +6,17 @@
 class HaarRectangle
 {
 public:
-	HaarRectangle(UInt top, UInt left, UInt width, UInt height, float weight) :
+	HaarRectangle(UInt left, UInt top, UInt width, UInt height, float weight) :
 		top(top),
 		left(left),
 		width(width),
 		height(height),
 		weight(weight),
 		sizeScale(1.0f),
-		weightScale(1.0f)
+		scaledWeight(1.0f)
 	{
-
+		right = left + width;
+		bottom = top + height;
 	}
 
 	HaarRectangle() :
@@ -25,7 +26,9 @@ public:
 		height(0),
 		weight(0.0f),
 		sizeScale(1.0f),
-		weightScale(1.0f)
+		scaledWeight(1.0f),
+		right(0),
+		bottom(0)
 	{
 
 	}
@@ -37,7 +40,9 @@ public:
 		height(rhs.height),
 		weight(rhs.weight),
 		sizeScale(rhs.sizeScale),
-		weightScale(rhs.weightScale)
+		scaledWeight(rhs.scaledWeight),
+		right(rhs.right),
+		bottom(rhs.bottom)
 	{
 
 	}
@@ -50,7 +55,9 @@ public:
 		height = (rhs.height);
 		weight = (rhs.weight);
 		sizeScale = (rhs.sizeScale);
-		weightScale = rhs.weightScale;
+		scaledWeight = rhs.scaledWeight;
+		right = rhs.right;
+		bottom = rhs.bottom;
 		return *this;
 	}
 	~HaarRectangle()
@@ -60,15 +67,11 @@ public:
 
 	UInt top, left, width, height, bottom, right;
 
-	float weight, sizeScale, weightScale;
+	float weight, sizeScale, scaledWeight;
 
 	void scaleSize(float scale)
 	{
 		sizeScale = scale;
-	}
-	void scaleWeight(float scale)
-	{
-		weightScale = scale;
 	}
 	UInt scaledX()
 	{
@@ -89,10 +92,6 @@ public:
 	UInt scaledArea()
 	{
 		return (UInt)(scaledWidth() * scaledHeight());
-	}
-	float scaledWeight()
-	{
-		return weight * weightScale;
 	}
 };
 

@@ -16,11 +16,11 @@ public:
 	{
 		delete[] this->stages;
 	}
+	std::vector<HaarRectangle> execute(IntegralImage* image);
 protected:
 private:
 	Stage *stages;
 	void generateFaceStages();
-	std::vector<HaarRectangle> execute(IntegralImage* image);
 	bool searchWindow(IntegralImage* image, HaarRectangle window, float invArea);
 };
 #endif

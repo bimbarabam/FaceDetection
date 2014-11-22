@@ -5,22 +5,22 @@ void HaarArea::setScaleAndWeight(double scale, double weight)
 {
 	if (this->numRectangles == 2)
 	{
-		rectangles[0].scaleSize(scale);
-		rectangles[0].scaleWeight(weight);
-
 		rectangles[1].scaleSize(scale);
-		rectangles[1].scaleWeight(-(rectangles[1].scaledArea() * rectangles[1].scaledWeight()) / rectangles[0].scaledArea());
+		rectangles[1].scaledWeight = rectangles[1].weight * (weight);
+
+		rectangles[0].scaleSize(scale);
+		rectangles[0].scaledWeight = (-(rectangles[1].scaledArea() * rectangles[1].scaledWeight) / rectangles[0].scaledArea());
 	}
 	else // this.numRectangles == 3
 	{
 		rectangles[2].scaleSize(scale);
-		rectangles[2].scaleWeight(weight);
+		rectangles[2].scaledWeight = rectangles[2].weight * (weight);
 
 		rectangles[1].scaleSize(scale);
-		rectangles[1].scaleWeight(weight);
+		rectangles[1].scaledWeight = rectangles[1].weight * (weight);
 
 		rectangles[0].scaleSize(scale);
-		rectangles[0].scaleWeight( -(rectangles[1].scaledArea() * rectangles[1].scaledWeight() + rectangles[2].scaledArea() * rectangles[2].scaledWeight()) / (rectangles[0].scaledArea()));
+		rectangles[0].scaledWeight = (-(rectangles[1].scaledArea() * rectangles[1].scaledWeight + rectangles[2].scaledArea() * rectangles[2].scaledWeight) / (rectangles[0].scaledArea()));
 	}
 }
 
@@ -31,7 +31,7 @@ double HaarArea::checkMatch(IntegralImage* image, UInt top, UInt left, double sc
 	for (int i = 0; i < this->numRectangles; ++i)
 	{
 		HaarRectangle& rect = this->rectangles[i];
-		sum += image->getSumInRect(left + rect.scaledX(), top + rect.scaledY(), rect.scaledWidth(), rect.scaledHeight()) * rect.scaledWeight();
+		sum += image->getSumInRect(left + rect.scaledX(), top + rect.scaledY(), rect.scaledWidth(), rect.scaledHeight()) * rect.scaledWeight;
 	}
 
 	return sum;
@@ -46,6 +46,7 @@ HaarArea::HaarArea(double threshold, double valueIfSmaller, double valueIfBigger
 threshold(threshold),
 valueIfSmaller(valueIfSmaller),
 valueIfBigger(valueIfBigger),
+numRectangles(2),
 rectangles(new HaarRectangle[2])
 {
 	rectangles[0] = rectangle1;
@@ -56,6 +57,7 @@ HaarArea::HaarArea(double threshold, double valueIfSmaller, double valueIfBigger
 threshold(threshold),
 valueIfSmaller(valueIfSmaller),
 valueIfBigger(valueIfBigger),
+numRectangles(3),
 rectangles(new HaarRectangle[3])
 {
 	rectangles[0] = rectangle1;

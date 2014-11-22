@@ -64,6 +64,10 @@ std::vector<HaarRectangle> HaarAlgorithm::execute(IntegralImage* image)
 				{
 					result.push_back(window);
 				}
+				else
+				{
+					y = y;
+				}
 			}
 		}
 

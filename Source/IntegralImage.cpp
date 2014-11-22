@@ -4,10 +4,10 @@
 IntegralImage::IntegralImage(UInt width, UInt height, unsigned char *picture) :
 width(width),
 height(height),
-stride(width)
+stride(width + 1)
 {
-	this->values = new UInt[width*height];
-	this->values2 = new UInt[width*height];
+	this->values = new UInt[(width+1)*(height+1)];
+	this->values2 = new UInt[(width+1)*(height+1)];
 	calcFromPicture(picture);
 }
 
@@ -21,24 +21,24 @@ void IntegralImage::calcFromPicture(unsigned char* picture)
 {
 	unsigned char* src = picture;
 
-	values[0] = picture[0];
-	values2[0] = picture[0] * picture[0];
+	values[0] = 0;
+	values2[0] = 0;
 
-	for (int i = 1; i < width; i++)
+	for (int i = 1; i <= width; ++i)
 	{
-		values[i] = values[i - 1] + picture[i];
-		values2[i] = values2[i - 1] + picture[i] * picture[i];
+		values[i] = 0;
+		values2[i] = 0;
 	}
-	for (int i = 1; i < height; i++)
+	for (int i = 1; i <= height; ++i)
 	{
-		values[i*stride] = values[(i - 1)*stride] + picture[i*stride];
-		values2[i*stride] = values2[(i - 1)*stride] + picture[i*stride] * picture[i*stride];
+		values[i*stride] = 0;
+		values2[i*stride] = 0;
 	}
 
 	for (int y = 1; y <= height; ++y)
 	{
-		int yCurrent = width * (y);
-		int yBefore = width * (y - 1);
+		int yCurrent = stride * (y);
+		int yBefore = stride * (y - 1);
 
 		for (int x = 1; x <= width; ++x)
 		{
@@ -52,26 +52,38 @@ void IntegralImage::calcFromPicture(unsigned char* picture)
 
 			values[idx] = p1 + values[bottomLeft] + values[upperRight] - values[upperLeft];
 			values2[idx] = p2 + values2[bottomLeft] + values2[upperRight] - values2[upperLeft];
+
+			++src;
 		}
 	}
 }
 
-UInt IntegralImage::getSumInRect(UInt top, UInt left, UInt windowWidth, UInt windowHeight)
+UInt IntegralImage::getSumInRect(UInt left, UInt top, UInt windowWidth, UInt windowHeight)
 {
 	int a = stride * (top)+(left);
 	int b = stride * (top + windowHeight) + (left + windowWidth);
 	int c = stride * (top + windowHeight) + (left);
 	int d = stride * (top)+(left + windowWidth);
+
+	int sa = values[a];
+	int sb = values[b];
+	int sc = values[c];
+	int sd = values[d];
 
 	return values[a] + values[b] - values[c] - values[d];
 }
 
-UInt IntegralImage::getSum2InRect(UInt top, UInt left, UInt windowWidth, UInt windowHeight)
+UInt IntegralImage::getSum2InRect(UInt left, UInt top, UInt windowWidth, UInt windowHeight)
 {
 	int a = stride * (top)+(left);
 	int b = stride * (top + windowHeight) + (left + windowWidth);
 	int c = stride * (top + windowHeight) + (left);
 	int d = stride * (top)+(left + windowWidth);
+
+	int sa = values2[a];
+	int sb = values2[b];
+	int sc = values2[c];
+	int sd = values2[d];
 
 	return values2[a] + values2[b] - values2[c] - values2[d];
 }

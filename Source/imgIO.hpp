@@ -18,7 +18,10 @@ public:
 	void WriteImgGrey ( const char* path, unsigned char *&img );
 	void WriteImgColor( const char* path, unsigned char *&img );
 
-	void ColorToGray( unsigned char *&imgColor, unsigned char *&imgGray );
+	void ColorToGray(unsigned char *&imgColor, unsigned char *&imgGray);
+	void ColorToRed(unsigned char *&imgColor, unsigned char *&imgRed);
+
+	void Transpose(unsigned char *&source, unsigned char *&dst);
 
 	void OpenInputStream ( const char* path );
 	void OpenOutputStream( const char* path );

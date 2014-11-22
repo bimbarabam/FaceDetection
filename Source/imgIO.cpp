@@ -58,6 +58,30 @@ void ImgIO::ColorToGray( unsigned char *&imgColor, unsigned char *&imgGray )
 	}
 }
 
+void ImgIO::ColorToRed(unsigned char *&imgColor, unsigned char *&imgRed)
+{
+	if (imgRed == NULL)
+		imgRed = new unsigned char[m_sizeX * m_sizeY];
+
+	const float redWeight = 0.21f;
+	const float greenWeight = 0.72f;
+	const float blueWeight = 0.07f;
+
+	int eltNo = 0;
+	int colorNo = 0;
+
+	for (int i = 0; i < m_sizeY; i++)
+	{
+		for (int j = 0; j < m_sizeX; j++)
+		{
+			imgRed[eltNo] = imgColor[colorNo];
+
+			eltNo++;
+			colorNo += 3;
+		}
+	}
+}
+
 void ImgIO::WriteImgGrey( const char* path, unsigned char *&img )
 {
 	cv::Mat tempImg( m_sizeY, m_sizeX , CV_8UC1 );
@@ -180,6 +204,24 @@ void ImgIO::Char2MatColor( unsigned char* &chImg, cv::Mat &matImg )
 			matImg.at<cv::Vec3b>(i,j) = pVal;
 
 			eltNo += 3;
+		}
+	}
+}
+
+void ImgIO::Transpose(unsigned char *&source, unsigned char *&dst)
+{
+	if (dst == NULL)
+		dst = new unsigned char[m_sizeX * m_sizeY];
+
+	int eltNo = 0;
+
+	for (int i = 0; i < m_sizeX; i++)
+	{
+		for (int j = 0; j < m_sizeY; j++)
+		{
+			dst[eltNo] = source[j*m_sizeX + i];
+
+			eltNo++;
 		}
 	}
 }
